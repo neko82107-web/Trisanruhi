@@ -4,250 +4,162 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Be My Valentine 💖</title>
-<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
 <style>
-body{
-    margin:0;
-    font-family:'Arial',sans-serif;
-    overflow:hidden;
-}
+    body {
+        margin: 0;
+        font-family: 'Poppins', sans-serif;
+        overflow: hidden;
+        background-color: #ffe6ea;
+    }
+    section {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        width: 100vw;
+        text-align: center;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+    section.active {
+        display: flex;
+        z-index: 10;
+    }
 
-/* Sections setup */
-section{
-    display:none;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    height:100vh;
-    width:100%;
-    text-align:center;
-    padding:20px;
-}
+    /* Page 1 Styling */
+    #page1 { background: linear-gradient(135deg, #ff9a9e, #fad0c4); }
+    #page1 h1 { font-size: 2.5rem; color: white; text-shadow: 0 0 15px rgba(255,0,105,0.5); padding: 20px; }
+    
+    .btn-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        width: 100%;
+    }
 
-section.active{
-    display:flex;
-}
+    button {
+        padding: 15px 30px;
+        font-size: 1.2rem;
+        border: none;
+        border-radius: 50px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: transform 0.2s ease;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
 
-/* First Page Styling */
-#page1{
-    background:linear-gradient(135deg,#ff9a9e,#fad0c4);
-    font-family:'Segoe UI',cursive;
-}
+    #yesBtn { background: #ff0066; color: white; z-index: 1000; }
+    #noBtn { background: #333; color: white; position: relative; }
 
-#page1 h1{
-    font-size:3rem;
-    color:white;
-    text-shadow:0 0 20px #ff4d6d;
-    animation:glow 2s infinite alternate;
-}
+    /* Emoji and Image Styling */
+    .emoji-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
+    .emoji { position: absolute; font-size: 2rem; animation: float linear infinite; }
+    @keyframes float { 0% { transform: translateY(110vh); } 100% { transform: translateY(-10vh); } }
 
-@keyframes glow{
-    from{ text-shadow:0 0 10px #fff; }
-    to{ text-shadow:0 0 30px #ff0066; }
-}
+    .couple-img { width: 80%; max-width: 300px; border-radius: 20px; margin-bottom: 20px; border: 5px solid white; }
 
-#page1 button{
-    padding:15px 40px;
-    font-size:1.2rem;
-    border:none;
-    border-radius:40px;
-    margin:15px;
-    cursor:pointer;
-    font-weight:bold;
-}
-
-#yesBtn{ background:#ff0066;color:white;width:140px;}
-#noBtn{ background:black;color:white;width:120px;}
-
-/* Emoji pages styling */
-.emoji-container{
-    position:absolute;
-    top:0; left:0;
-    width:100%;
-    height:100%;
-    overflow:hidden;
-}
-
-.emoji{
-    position:absolute;
-    font-size:2.5rem;
-    animation:float linear infinite;
-}
-
-@keyframes float{
-    0%{transform:translateY(100vh);}
-    100%{transform:translateY(-10vh);}
-}
-
-/* Last page styling */
-#page5{
-    background:black;
-    color:gold;
-    font-family:'Great Vibes',cursive;
-    overflow:hidden;
-}
-
-#page5 h1{
-    font-size:4rem;
-    text-shadow:0 0 25px red;
-    animation:heartbeat 1s infinite;
-}
-
-#page5 h2{
-    font-size:2rem;
-    color:#ff0066;
-    animation:fadein 2s infinite alternate;
-}
-
-@keyframes heartbeat{
-    0%{transform:scale(1);}
-    50%{transform:scale(1.1);}
-    100%{transform:scale(1);}
-}
-
-@keyframes fadein{
-    0%{opacity:0.5;}
-    100%{opacity:1;}
-}
-
-.heart{
-    position:absolute;
-    color:red;
-    font-size:2rem;
-    animation:fall 5s linear infinite;
-}
-
-@keyframes fall{
-    0%{transform:translateY(-10vh) rotate(0deg);}
-    100%{transform:translateY(110vh) rotate(360deg);}
-}
-
-/* Fireworks */
-.firework{
-    position:absolute;
-    width:5px;
-    height:5px;
-    background:yellow;
-    border-radius:50%;
-    animation:explosion 1s ease-out forwards;
-}
-
-@keyframes explosion{
-    0%{transform:scale(0);}
-    100%{transform:scale(3);opacity:0;}
-}
-
-.next-btn{
-    padding:15px 35px;
-    font-size:1.2rem;
-    border:none;
-    border-radius:30px;
-    background:#ff0066;
-    color:white;
-    cursor:pointer;
-    margin-top:20px;
-}
+    /* Final Page */
+    #page5 { background: #fff0f3; font-family: 'Great Vibes', cursive; }
+    #page5 h1 { font-size: 3.5rem; color: #ff0066; margin: 0; }
+    
+    .next-btn { background: #ff4d6d; color: white; margin-top: 20px; z-index: 2000; }
 </style>
 </head>
 <body>
 
-<!-- Page 1 -->
 <section id="page1" class="active">
+    <img src="https://i.postimg.cc/5YTx5mnm/5YTx5mnm.jpg" alt="Us" class="couple-img">
     <h1>Will You Be My Valentine? 🥰</h1>
-    <button id="yesBtn" onclick="nextPage(2)">YES 💖</button>
-    <button id="noBtn" onclick="moveNo()">NO 😏</button>
+    <div class="btn-container">
+        <button id="yesBtn" onclick="startHearts()">YES 💖</button>
+        <button id="noBtn" onclick="moveNo()">NO 😏</button>
+    </div>
 </section>
 
-<!-- Page 2: Heart Emojis -->
 <section id="page2">
     <div class="emoji-container" id="emoji1"></div>
     <h1>❤️ Hearts Everywhere ❤️</h1>
     <button class="next-btn" onclick="nextPage(3)">Continue ➡️</button>
 </section>
 
-<!-- Page 3: Kiss Emojis -->
 <section id="page3">
     <div class="emoji-container" id="emoji2"></div>
     <h1>💋 Sweet Kisses 💋</h1>
     <button class="next-btn" onclick="nextPage(4)">Continue ➡️</button>
 </section>
 
-<!-- Page 4: Flower Emojis -->
 <section id="page4">
     <div class="emoji-container" id="emoji3"></div>
     <h1>🌹 Roses For You 🌹</h1>
     <button class="next-btn" onclick="nextPage(5)">Continue ➡️</button>
 </section>
 
-<!-- Page 5: Final -->
 <section id="page5">
-    <h1>You Are Mine Forever ❤️</h1>
-    <h2>I Love You Endlessly 💖</h2>
-    <p style="color:white;font-size:1.5rem;">Hehe 💌💖</p>
-    <audio autoplay loop>
-      <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-    </audio>
+    <img src="https://i.postimg.cc/YLQw6B47/YLQw6B47.jpg" alt="Love" class="couple-img">
+    <h1>YAY! 🎉</h1>
+    <h2>You Are My Valentine Baby 💖</h2>
+    <p style="font-size:1.8rem; color:#ff0066;">I love you forever and ever! 💌</p>
+    <img src="https://i.postimg.cc/Mn68Q4zJ/Mn68Q4zJ.jpg" alt="Couple" class="couple-img" style="width:50%">
 </section>
 
 <script>
-// Page Navigation
-function nextPage(n){
-    for(let i=1;i<=5;i++){
-        document.getElementById('page'+i).classList.remove('active');
-    }
-    document.getElementById('page'+n).classList.add('active');
+let yesScale = 1;
+let noClicks = 0;
 
-    if(n===2) generateEmojis('emoji1',['❤️','💖','💞','💍'],80);
-    if(n===3) generateEmojis('emoji2',['💋'],70);
-    if(n===4) generateEmojis('emoji3',['🌹','🌸','🌺'],60);
-    if(n===5) triggerFinalPage();
+// Function to make "No" move and "Yes" grow
+function moveNo() {
+    noClicks++;
+    
+    // Grow the Yes Button
+    yesScale += 0.4;
+    document.getElementById("yesBtn").style.transform = `scale(${yesScale})`;
+
+    // Move the No Button
+    const btn = document.getElementById("noBtn");
+    btn.style.position = "fixed";
+    const x = Math.random() * (window.innerWidth - 100);
+    const y = Math.random() * (window.innerHeight - 50);
+    btn.style.left = x + "px";
+    btn.style.top = y + "px";
+    
+    const messages = ["Are you sure?", "Pwease?", "Really??", "Baby nooo", "I'll cry..."];
+    btn.innerText = messages[Math.min(noClicks - 1, messages.length - 1)];
 }
 
-// NO button movement
-function moveNo(){
-    const btn=document.getElementById("noBtn");
-    btn.style.position="absolute";
-    btn.style.left=Math.random()*80+"%";
-    btn.style.top=Math.random()*80+"%";
+// Fixed navigation
+function nextPage(pageNum) {
+    // Hide all sections
+    document.querySelectorAll('section').forEach(sec => sec.classList.remove('active'));
+    // Show current section
+    const nextSec = document.getElementById('page' + pageNum);
+    nextSec.classList.add('active');
+
+    // Trigger animations based on page
+    if(pageNum === 3) generateEmojis('emoji2', ['💋', '😘'], 40);
+    if(pageNum === 4) generateEmojis('emoji3', ['🌹', '🌸', '💐'], 40);
 }
 
-// Generate emojis
-function generateEmojis(containerId,emojiList,count){
-    const container=document.getElementById(containerId);
-    for(let i=0;i<count;i++){
-        let e=document.createElement('div');
-        e.className='emoji';
-        e.innerText=emojiList[Math.floor(Math.random()*emojiList.length)];
-        e.style.left=Math.random()*100+'%';
-        e.style.animationDuration=(2+Math.random()*3)+'s';
+function startHearts() {
+    nextPage(2);
+    generateEmojis('emoji1', ['❤️', '💖', '💕', '🥰'], 50);
+}
+
+function generateEmojis(containerId, list, count) {
+    const container = document.getElementById(containerId);
+    container.innerHTML = ''; // Clear previous to prevent lag
+    for (let i = 0; i < count; i++) {
+        const e = document.createElement('div');
+        e.className = 'emoji';
+        e.innerText = list[Math.floor(Math.random() * list.length)];
+        e.style.left = Math.random() * 100 + '%';
+        e.style.animationDuration = (Math.random() * 3 + 2) + 's';
+        e.style.delay = Math.random() * 2 + 's';
         container.appendChild(e);
     }
-}
-
-// Final page: hearts + fireworks
-function triggerFinalPage(){
-    // Falling hearts
-    for(let i=0;i<50;i++){
-        let h=document.createElement("div");
-        h.className="heart";
-        h.innerText="❤️";
-        h.style.left=Math.random()*100+"%";
-        h.style.animationDuration=(3+Math.random()*4)+"s";
-        document.body.appendChild(h);
-    }
-
-    // Fireworks
-    setInterval(()=>{
-        for(let i=0;i<10;i++){
-            let f=document.createElement("div");
-            f.className="firework";
-            f.style.left=Math.random()*100+"%";
-            f.style.top=Math.random()*50+"%";
-            document.body.appendChild(f);
-            setTimeout(()=>f.remove(),1000);
-        }
-    },1000);
 }
 </script>
 
