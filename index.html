@@ -20,26 +20,19 @@
         height: 100vh;
         width: 100vw;
         text-align: center;
-        position: absolute;
+        position: fixed; /* Keeps pages from stacking on mobile */
         top: 0;
         left: 0;
     }
     section.active {
         display: flex;
-        z-index: 10;
     }
 
     /* Page 1 Styling */
     #page1 { background: linear-gradient(135deg, #ff9a9e, #fad0c4); }
-    #page1 h1 { font-size: 2.5rem; color: white; text-shadow: 0 0 15px rgba(255,0,105,0.5); padding: 20px; }
+    #page1 h1 { font-size: 2.2rem; color: white; text-shadow: 0 0 10px #ff0066; padding: 20px; }
     
-    .btn-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 20px;
-        width: 100%;
-    }
+    .couple-img { width: 80%; max-width: 300px; border-radius: 20px; margin-bottom: 20px; border: 5px solid white; box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
 
     button {
         padding: 15px 30px;
@@ -49,24 +42,20 @@
         cursor: pointer;
         font-weight: bold;
         transition: transform 0.2s ease;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     }
 
-    #yesBtn { background: #ff0066; color: white; z-index: 1000; }
-    #noBtn { background: #333; color: white; position: relative; }
+    #yesBtn { background: #ff0066; color: white; z-index: 100; }
+    #noBtn { background: #333; color: white; }
 
-    /* Emoji and Image Styling */
+    /* Emoji Animations */
     .emoji-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
-    .emoji { position: absolute; font-size: 2rem; animation: float linear infinite; }
+    .emoji { position: absolute; font-size: 2.5rem; animation: float linear infinite; }
     @keyframes float { 0% { transform: translateY(110vh); } 100% { transform: translateY(-10vh); } }
-
-    .couple-img { width: 80%; max-width: 300px; border-radius: 20px; margin-bottom: 20px; border: 5px solid white; }
 
     /* Final Page */
     #page5 { background: #fff0f3; font-family: 'Great Vibes', cursive; }
-    #page5 h1 { font-size: 3.5rem; color: #ff0066; margin: 0; }
-    
-    .next-btn { background: #ff4d6d; color: white; margin-top: 20px; z-index: 2000; }
+    #page5 h1 { font-size: 3.2rem; color: #ff0066; margin: 10px 0; }
+    .next-btn { background: #ff4d6d; color: white; margin-top: 20px; }
 </style>
 </head>
 <body>
@@ -74,8 +63,8 @@
 <section id="page1" class="active">
     <img src="https://i.postimg.cc/5YTx5mnm/5YTx5mnm.jpg" alt="Us" class="couple-img">
     <h1>Will You Be My Valentine? 🥰</h1>
-    <div class="btn-container">
-        <button id="yesBtn" onclick="startHearts()">YES 💖</button>
+    <div style="display:flex; flex-direction:column; gap:20px; align-items:center;">
+        <button id="yesBtn" onclick="startLove()">YES 💖</button>
         <button id="noBtn" onclick="moveNo()">NO 😏</button>
     </div>
 </section>
@@ -102,66 +91,70 @@
     <img src="https://i.postimg.cc/YLQw6B47/YLQw6B47.jpg" alt="Love" class="couple-img">
     <h1>YAY! 🎉</h1>
     <h2>You Are My Valentine Baby 💖</h2>
-    <p style="font-size:1.8rem; color:#ff0066;">I love you forever and ever! 💌</p>
-    <img src="https://i.postimg.cc/Mn68Q4zJ/Mn68Q4zJ.jpg" alt="Couple" class="couple-img" style="width:50%">
+    <p style="font-size:1.8rem; color:#ff0066; font-family: sans-serif;">I love you forever and ever! 💌</p>
+    <img src="https://i.postimg.cc/Mn68Q4zJ/Mn68Q4zJ.jpg" alt="Couple" class="couple-img" style="width:55%">
 </section>
 
 <script>
 let yesScale = 1;
 let noClicks = 0;
 
-// Function to make "No" move and "Yes" grow
+// This makes YES grow when she hits NO
 function moveNo() {
     noClicks++;
     
-    // Grow the Yes Button
+    // 1. Grow the YES button
     yesScale += 0.4;
     document.getElementById("yesBtn").style.transform = `scale(${yesScale})`;
 
-    // Move the No Button
-    const btn = document.getElementById("noBtn");
-    btn.style.position = "fixed";
-    const x = Math.random() * (window.innerWidth - 100);
-    const y = Math.random() * (window.innerHeight - 50);
-    btn.style.left = x + "px";
-    btn.style.top = y + "px";
+    // 2. Move the NO button
+    const noBtn = document.getElementById("noBtn");
+    noBtn.style.position = "fixed";
+    const x = Math.random() * (window.innerWidth - 120);
+    const y = Math.random() * (window.innerHeight - 60);
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
     
-    const messages = ["Are you sure?", "Pwease?", "Really??", "Baby nooo", "I'll cry..."];
-    btn.innerText = messages[Math.min(noClicks - 1, messages.length - 1)];
+    const lines = ["Are you sure?", "Pwease?", "Really??", "Baby nooo", "I'll cry..."];
+    noBtn.innerText = lines[Math.min(noClicks - 1, lines.length - 1)];
 }
 
-// Fixed navigation
+// Fixed Navigation Logic
 function nextPage(pageNum) {
     // Hide all sections
-    document.querySelectorAll('section').forEach(sec => sec.classList.remove('active'));
-    // Show current section
-    const nextSec = document.getElementById('page' + pageNum);
-    nextSec.classList.add('active');
+    document.querySelectorAll('section').forEach(sec => {
+        sec.classList.remove('active');
+    });
+    
+    // Show target section
+    const target = document.getElementById('page' + pageNum);
+    if(target) {
+        target.classList.add('active');
+    }
 
-    // Trigger animations based on page
+    // Trigger animations
+    if(pageNum === 2) generateEmojis('emoji1', ['❤️', '💖', '💕'], 40);
     if(pageNum === 3) generateEmojis('emoji2', ['💋', '😘'], 40);
-    if(pageNum === 4) generateEmojis('emoji3', ['🌹', '🌸', '💐'], 40);
+    if(pageNum === 4) generateEmojis('emoji3', ['🌹', '🌸'], 40);
 }
 
-function startHearts() {
+function startLove() {
     nextPage(2);
-    generateEmojis('emoji1', ['❤️', '💖', '💕', '🥰'], 50);
 }
 
 function generateEmojis(containerId, list, count) {
     const container = document.getElementById(containerId);
-    container.innerHTML = ''; // Clear previous to prevent lag
+    container.innerHTML = ''; // Prevent lag
     for (let i = 0; i < count; i++) {
         const e = document.createElement('div');
         e.className = 'emoji';
         e.innerText = list[Math.floor(Math.random() * list.length)];
         e.style.left = Math.random() * 100 + '%';
         e.style.animationDuration = (Math.random() * 3 + 2) + 's';
-        e.style.delay = Math.random() * 2 + 's';
+        e.style.animationDelay = (Math.random() * 2) + 's';
         container.appendChild(e);
     }
 }
 </script>
-
 </body>
 </html>
